@@ -5,10 +5,10 @@
 <div class="container">
 	<hgroup>
 		<h1>
-			<a href="/"> SvelteKit & Prisma 🔥</a>
+			<a href="/"> Sveltekit es genial! 🔥</a>
 		</h1>
 
-		<h2>Let's build a basic CRUD application with SvelteKit & Prisma.</h2>
+		<h2>Un CRUD hecho con Sveltekit y Prisma</h2>
 	</hgroup>
 	<slot />
 </div>
