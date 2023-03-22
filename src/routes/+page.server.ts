@@ -1,6 +1,13 @@
 import type { Actions } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 import { fail } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+
+export const load: PageServerLoad = async () => {
+	return {
+		articles: await prisma.article.findMany()
+	};
+};
 
 export const actions: Actions = {
 	// exportamos las acciones
@@ -25,6 +32,25 @@ export const actions: Actions = {
 		}
 		return {
 			status: 201
+		};
+	},
+	deleteArticle: async ({ url }) => {
+		const id = url.searchParams.get('id');
+		if (!id) {
+			return fail(400, { message: 'No se ha proporcionado un ID' });
+		}
+		try {
+			await prisma.article.delete({
+				where: {
+					id: Number(id)
+				}
+			});
+		} catch (err) {
+			console.error(err);
+			return fail(500, { message: 'Error al eliminar el artículo' });
+		}
+		return {
+			status: 200
 		};
 	}
 };

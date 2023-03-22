@@ -1,15 +1,25 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+	export let data: PageData;
+
+	$: ({ articles } = data);
+</script>
+
 <div class="grid">
 	<div>
 		<h2>Articles</h2>
-		<article>
-			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet doloremque sit ipsam labore
-				vitae tenetur, laudantium vel quaerat perspiciatis laboriosam nemo sed? Laboriosam aperiam
-				delectus voluptatem corrupti ut blanditiis qui.
-			</p>
-			<button class="outline secondary">Delete Article </button>
-			<a href="/" role="button" class="outline contrast" style="width: 100%;"> Edit Article </a>
-		</article>
+		{#each articles as article}
+			<article>
+				<header>{article.title}</header>
+				<p>
+					{article.content}
+				</p>
+				<form action="?/deleteArticle&id={article.id}" method="POST">
+					<button class="outline secondary">Delete Article </button>
+				</form>
+				<a href="/{article.id}" role="button" class="outline contrast" style="width: 100%;"> Edit Article </a>
+			</article>
+		{/each}
 	</div>
 	<form action="?/createArticle" method="POST">
 		<h3>New article</h3>
